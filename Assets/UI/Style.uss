@@ -1,0 +1,53 @@
+:root {
+    --font: url('project://database/Assets/UI/EleganceUI/Pribambas.ttf?fileID=12800000&guid=96b9ee3a7ff2145cf8c2cc501f999409&type=3#Pribambas');
+}
+
+Button {
+    -unity-font: var(--font);
+    -unity-font-definition: none;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-radius: 5px;
+}
+
+Button:enabled:hover {
+    opacity: 0.8;
+}
+
+Button:active {
+    scale: 0.98 0.98;
+}
+
+Label {
+    -unity-font: var(--font);
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: none;
+}
+
+.title {
+    top: 10px;
+    font-size: 40px;
+}
+
+.btn-green {
+    background-color: rgb(140, 162, 33);
+}
+
+.btn-blue {
+    background-color: rgb(24, 124, 135);
+}
+
+.btn-red {
+    background-color: rgb(228, 51, 41);
+}
