@@ -49,7 +49,7 @@ public class ConnectionService
     {
         Debug.Log("GetTokenAsync");
 
-        var response = await client.PostAsJsonAsync<LoginVM>(serviceUrl + "/CreateToken/", loginInfo);
+        var response = await client.PostAsJsonAsync<LoginVM>(serviceUrl + "/CreateToken", loginInfo);
 
         if (response.IsSuccessStatusCode)
         {
@@ -69,8 +69,9 @@ public class ConnectionService
     {
         Debug.Log("GetTokenAsync");
 
+        var url= $"{serviceUrl}/RequestConnection?account={account}";
 
-        var response = await client.GetAsync(serviceUrl + "/RequestConnection?account?=" + account, HttpCompletionOption.ResponseContentRead);
+        var response = await client.GetAsync(url);
 
         if (response.IsSuccessStatusCode)
         {

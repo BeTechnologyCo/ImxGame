@@ -110,6 +110,7 @@ public class Web3Modal : MonoBehaviour
         var infos = await ConnectionService.RequestConnection(e);
         var infoSigned = await Web3Connect.Instance.PersonalSign(infos.Message);
         var token = await ConnectionService.GetTokenAsync(new LoginVM { Message = infos.Message, Signer = e, Signature = infoSigned });
+        GameContext.Instance.Token = token;
         Debug.Log("Token " + token);
 
     }
