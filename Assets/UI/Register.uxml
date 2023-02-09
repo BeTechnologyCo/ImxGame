@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style.uss?fileID=7433441132597879392&amp;guid=9c915b5e4bb9b4cbcafbd606c8f8e46b&amp;type=3#Style" />
+    <ui:VisualElement style="flex-grow: 1; align-items: center;">
+        <ui:Label text="Player" display-tooltip-when-elided="true" style="border-top-width: 30px; font-size: 40px;" />
+        <ui:TextField picking-mode="Ignore" label="Name" name="txtName" style="width: 600px; border-top-width: 50px;" />
+        <ui:Button text="Register Player" display-tooltip-when-elided="true" name="btnCreate" class="btn-green" style="margin-top: 50px;" />
+        <ui:Label text="Error" display-tooltip-when-elided="true" name="lblError" style="border-top-width: 30px; font-size: 30px; color: rgb(255, 18, 18); margin-top: 30px;" />
+    </ui:VisualElement>
+</ui:UXML>
