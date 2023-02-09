@@ -15,7 +15,6 @@ using System.Timers;
 public class RegisterService
 {
     private static Timer aTimer;
-    static HttpClient client = new HttpClient();
     private static string serviceUrl = "https://localhost:7062/api/register";
 
 
@@ -27,25 +26,35 @@ public class RegisterService
         serviceUrl = "https://localhost:7062/api/register";
 #endif
 
+        //GameContext.Instance.Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjB4NjcwY0FjZjQ4QjY4NWVCMUFGOGRjNzNDNThBQWJkMzBhQTM1OTU4RSIsImp0aSI6ImIzMzJlMzMyLTAxMWQtNGJiZi1iMGFjLTU3MmJjMWU2YmM4MCIsImV4cCI6MTY3NTk0NTE3NX0.1HGytwdV0ZWu5Jyv7XudX5qg31EYWIncmSeQPhYas7o";
+
     }
 
     public static async Task<PlayerDto> CreatePlayer(string name)
     {
         Debug.Log("CreatePlayer");
 
-        var response = await client.PostAsJsonAsync<PlayerDto>(serviceUrl + "/CreatePlayer", new PlayerDto() { Name = name });
-
-        if (response.IsSuccessStatusCode)
+        using (var client = new HttpClient())
         {
-            var res = await response.Content.ReadAsStringAsync();
-            var payload = JsonConvert.DeserializeObject<PlayerDto>(res);
-            Debug.Log("player created");
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GameContext.Instance.Token);
 
-            return payload;
-        }
-        else
-        {
-            throw new InvalidOperationException("Error server " + response.ReasonPhrase);
+            var response = await client.PostAsJsonAsync<PlayerName>(serviceUrl + "/CreatePlayer", new PlayerName()
+            {
+                Name = name
+            });
+
+            if (response.IsSuccessStatusCode)
+            {
+                var res = await response.Content.ReadAsStringAsync();
+                var payload = JsonConvert.DeserializeObject<PlayerDto>(res);
+                Debug.Log("player created");
+
+                return payload;
+            }
+            else
+            {
+                throw new InvalidOperationException("Error server " + response.ReasonPhrase);
+            }
         }
     }
 
@@ -53,63 +62,26 @@ public class RegisterService
     {
         Debug.Log("GetPlayer");
 
-        var url = $"{serviceUrl}/GetPlayer";
-
-        var response = await client.GetAsync(url);
-
-        if (response.IsSuccessStatusCode)
+        using (var client = new HttpClient())
         {
-            var res = await response.Content.ReadAsStringAsync();
-            var payload = JsonConvert.DeserializeObject<PlayerDto>(res);
-            Debug.Log("player loaded");
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + GameContext.Instance.Token);
 
-            return payload;
-        }
-        else
-        {
-            throw new InvalidOperationException("Error server " + response.ReasonPhrase);
+            var url = $"{serviceUrl}/GetPlayer";
+
+            var response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var res = await response.Content.ReadAsStringAsync();
+                var payload = JsonConvert.DeserializeObject<PlayerDto>(res);
+                Debug.Log("player loaded");
+
+                return payload;
+            }
+            else
+            {
+                throw new InvalidOperationException("Error server " + response.ReasonPhrase);
+            }
         }
     }
-}
-
-public class TokenResponse
-{
-    [JsonProperty("token")]
-    public string Token { get; set; }
-}
-
-public class ErrorResponse
-{
-    [JsonProperty("error")]
-    public string Error { get; set; }
-
-    [JsonProperty("error_description")]
-    public string Description { get; set; }
-}
-
-public class LoginVM
-{
-    public string Signer { get; set; } // Ethereum account that claim the signature
-    public string Signature { get; set; } // The signature
-    public string Message { get; set; } // The plain message
-}
-
-public class UserVM
-{
-    public string Account { get; set; } // Unique account name (the Ethereum account)
-    public string Name { get; set; } // The user name
-    public string Email { get; set; } // The user Email
-}
-
-public class ConnectionVM
-{
-    public string Account { get; set; }
-    public Guid Nonce { get; set; }
-    public DateTime DateTime { get; set; }
-}
-
-public class MessageVM
-{
-    public string Account { get; set; }
-    public string Message { get; set; }
 }
