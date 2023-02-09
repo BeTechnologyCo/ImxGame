@@ -12,8 +12,7 @@ public class Register : MonoBehaviour
   
 
     protected VisualElement root;
-    protected VisualElement imgQrCode;
-    protected VisualElement veMetamask;
+    protected TextField txtName;
     protected Button btnCreate;
 
 
@@ -23,12 +22,16 @@ public class Register : MonoBehaviour
 
         root = GetComponent<UIDocument>().rootVisualElement;
         btnCreate = root.Q<Button>("btnCreate");
+        txtName = root.Q<TextField>("txtName");
         btnCreate.clicked += BtnCreate_clicked;
     }
 
     private async void BtnCreate_clicked()
     {
-        throw new System.NotImplementedException();
+        if (txtName.text.Length > 3)
+        {
+
+        }
     }
 
     void Update()
